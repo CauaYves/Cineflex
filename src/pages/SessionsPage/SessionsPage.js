@@ -1,118 +1,102 @@
-import styled from "styled-components"
+import styled from "styled-components";
+import axios from "axios";
+import SessionContainer from "../../components/SessionContainer";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-export default function SessionsPage() {
+export default function SessionsPage({ imagens }) {
 
-    return (
-        <PageContainer>
-            Selecione o horário
-            <div>
-                <SessionContainer>
-                    Sexta - 03/03/2023
-                    <ButtonsContainer>
-                        <button>14:00</button>
-                        <button>15:00</button>
-                    </ButtonsContainer>
-                </SessionContainer>
+  const [moviePoster, setMoviePoster] = useState("https://imgs.search.brave.com/kK-qPkBwDxw2Eo0GXNTFDUD5XdXsemJ7umiqGVK1yks/rs:fit:820:981:1/g:ce/aHR0cHM6Ly9pbWcu/ZmF2cG5nLmNvbS8x/OC85LzE4L3Bob3Rv/Z3JhcGhpYy1maWxt/LW1vdmllLWljb25z/LWNpbmVtYS1jbGFw/cGVyYm9hcmQtcG5n/LWZhdnBuZy1hUjBC/YWhFekVqQ0tlZ0JB/NUxuMllXMUZlLmpw/Zw");
+  const [title, setTitle] = useState('CARREGANDO')
+  const { movieId } = useParams();
+  const sessionsURL = `https://mock-api.driven.com.br/api/v8/cineflex/movies/${movieId}/showtimes`;
+  const [sessionsDays, setSessionsDays] = useState('CARREGANDO')
+  const [days, setDays] = useState([])
 
-                <SessionContainer>
-                    Sexta - 03/03/2023
-                    <ButtonsContainer>
-                        <button>14:00</button>
-                        <button>15:00</button>
-                    </ButtonsContainer>
-                </SessionContainer>
+  useEffect(() => {
 
-                <SessionContainer>
-                    Sexta - 03/03/2023
-                    <ButtonsContainer>
-                        <button>14:00</button>
-                        <button>15:00</button>
-                    </ButtonsContainer>
-                </SessionContainer>
-            </div>
+    const promise = axios.get(sessionsURL);
+    promise.then(({data}) => {
 
-            <FooterContainer>
-                <div>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster" />
-                </div>
-                <div>
-                    <p>Tudo em todo lugar ao mesmo tempo</p>
-                </div>
-            </FooterContainer>
+    const {title: movieTitle, posterURL: poster, days: days,} = data
 
-        </PageContainer>
-    )
+    setDays(days)
+    setMoviePoster(poster)
+    setTitle(movieTitle)
+    });
+  }, []);
+
+  return (
+    <PageContainer>
+      Selecione o horário
+      <div>
+
+        {days.map((day) => {
+          return <SessionContainer key={day.id} properties={day}/>
+        })}
+        
+      </div>
+      <FooterContainer>
+        <div>
+          <img src={moviePoster} alt="loading" />
+        </div>
+        <div>
+          <p>{title}</p>
+        </div>
+      </FooterContainer>
+    </PageContainer>
+  );
 }
 
 const PageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-family: "Roboto";
+  font-size: 24px;
+  text-align: center;
+  color: #293845;
+  margin-top: 30px;
+  padding-bottom: 120px;
+  padding-top: 70px;
+  div {
+    margin-top: 20px;
+  }
+`;
+const FooterContainer = styled.div`
+  width: 100%;
+  height: 120px;
+  background-color: #c3cfd9;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 20px;
+  position: fixed;
+  bottom: 0;
+
+  div:nth-child(1) {
+    box-shadow: 0px 2px 4px 2px #0000001a;
+    border-radius: 3px;
     display: flex;
-    flex-direction: column;
-    font-family: 'Roboto';
-    font-size: 24px;
-    text-align: center;
-    color: #293845;
-    margin-top: 30px;
-    padding-bottom: 120px;
-    padding-top: 70px;
-    div {
-        margin-top: 20px;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    margin: 12px;
+    img {
+      width: 50px;
+      height: 70px;
+      padding: 8px;
     }
-`
-const SessionContainer = styled.div`
+  }
+
+  div:nth-child(2) {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    font-family: 'Roboto';
-    font-size: 20px;
-    color: #293845;
-    padding: 0 20px;
-`
-const ButtonsContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    margin: 20px 0;
-    button {
-        margin-right: 20px;
+    p {
+      text-align: left;
+      &:nth-child(2) {
+        margin-top: 10px;
+      }
     }
-    a {
-        text-decoration: none;
-    }
-`
-const FooterContainer = styled.div`
-    width: 100%;
-    height: 120px;
-    background-color: #C3CFD9;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    font-size: 20px;
-    position: fixed;
-    bottom: 0;
-
-    div:nth-child(1) {
-        box-shadow: 0px 2px 4px 2px #0000001A;
-        border-radius: 3px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: white;
-        margin: 12px;
-        img {
-            width: 50px;
-            height: 70px;
-            padding: 8px;
-        }
-    }
-
-    div:nth-child(2) {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        p {
-            text-align: left;
-            &:nth-child(2) {
-                margin-top: 10px;
-            }
-        }
-    }
-`
+  }
+`;

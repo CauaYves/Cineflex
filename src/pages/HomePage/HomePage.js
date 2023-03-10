@@ -1,26 +1,7 @@
-import axios from "axios"
 import MovieContainer from "../../components/MovieContainer"
-import { useEffect, useState } from "react"
 import styled from "styled-components"
 
-export default function HomePage() {
-    const [imagens, setImagens] = useState([])
-
-
-    function redirect(param){
-        console.log(`Você foi redirecionado ${param}`)
-    }
-
-
-    useEffect(() => {
-        const url = "https://mock-api.driven.com.br/api/v8/cineflex/movies"
-
-        const promise = axios.get(url)
-        promise.then((answer) => {
-            setImagens(answer.data)
-        })
-    }, [])
-
+export default function HomePage({imagens}) {
 
     return (
         <PageContainer>
@@ -28,7 +9,7 @@ export default function HomePage() {
 
             <ListContainer>
                 {imagens.map((objects) => {
-                    return <MovieContainer onclick={redirect} key={objects.id} objects={objects} />
+                    return <MovieContainer key={objects.id} objects={objects} />
                 })}
             </ListContainer>
 

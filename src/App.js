@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { useEffect, useState } from "react"
+import axios from "axios"
 import styled from "styled-components"
 import HomePage from "./pages/HomePage/HomePage"
 import SeatsPage from "./pages/SeatsPage/SeatsPage"
@@ -7,15 +9,26 @@ import SuccessPage from "./pages/SuccessPage/SuccessPage"
 
 
 export default function App() {
+
+    const [imagens, setImagens] = useState([])
+    useEffect(() => {
+        const url = "https://mock-api.driven.com.br/api/v8/cineflex/movies"
+
+        const promise = axios.get(url)
+        promise.then((answer) => {
+            setImagens(answer.data)
+        })
+    }, [])
+
     return (
         <BrowserRouter>
 
             <NavContainer>CINEFLEX</NavContainer>
                 <Routes>
 
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/sessoes" element={<SeatsPage />} />
-                    <Route path="/" element={<SessionsPage />} />
+                    <Route path="/" element={<HomePage imagens={imagens}/>} />
+                    <Route path="/sessoes/:movieId" element={<SessionsPage imagens={imagens}/>} />
+                    <Route path="/" element={<SeatsPage />} />
                     <Route path="/" element={<SuccessPage />} />
 
                 </Routes>

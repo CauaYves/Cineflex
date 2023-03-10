@@ -2,14 +2,13 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function MovieContainer(props) {
+
+const movie = props.objects.posterURL
+const movieId = props.objects.id
   return (
-    <Link to="/sessoes">
-      <MovieContainers
-        onClick={() => {
-          props.onclick("Yves");
-        }}
-      >
-        <img src={props.objects.posterURL} alt="poster" />
+    <Link to={ `/sessoes/${movieId}` } >
+      <MovieContainers>
+        <img src={movie} alt="poster" />
       </MovieContainers>
     </Link>
   );
