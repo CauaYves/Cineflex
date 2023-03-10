@@ -1,19 +1,25 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import styled from "styled-components"
 import HomePage from "./pages/HomePage/HomePage"
 import SeatsPage from "./pages/SeatsPage/SeatsPage"
 import SessionsPage from "./pages/SessionsPage/SessionsPage"
 import SuccessPage from "./pages/SuccessPage/SuccessPage"
 
+
 export default function App() {
     return (
-        <>
-           <NavContainer>CINEFLEX</NavContainer>
+        <BrowserRouter>
 
-            <HomePage />
-            {/* <SeatsPage /> */}
-            {/* <SessionsPage /> */}
-            {/* <SuccessPage /> */}
-        </>
+            <NavContainer>CINEFLEX</NavContainer>
+                <Routes>
+
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/sessoes" element={<SeatsPage />} />
+                    <Route path="/" element={<SessionsPage />} />
+                    <Route path="/" element={<SuccessPage />} />
+
+                </Routes>
+        </BrowserRouter>
     )
 }
 

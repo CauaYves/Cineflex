@@ -6,6 +6,12 @@ import styled from "styled-components"
 export default function HomePage() {
     const [imagens, setImagens] = useState([])
 
+
+    function redirect(param){
+        console.log(`Você foi redirecionado ${param}`)
+    }
+
+
     useEffect(() => {
         const url = "https://mock-api.driven.com.br/api/v8/cineflex/movies"
 
@@ -15,13 +21,14 @@ export default function HomePage() {
         })
     }, [])
 
+
     return (
         <PageContainer>
             Selecione o filme
 
             <ListContainer>
                 {imagens.map((objects) => {
-                    return <MovieContainer key={objects.id} objects={objects} />
+                    return <MovieContainer onclick={redirect} key={objects.id} objects={objects} />
                 })}
             </ListContainer>
 
