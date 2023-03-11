@@ -1,21 +1,31 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function SessionContainer({properties}) {
 
-    const { weekday, date, showtimes } = properties
-
+    const {weekday, date, showtimes } = properties
+    
     return (
         <SessionContainers>
             {weekday} - {date}
             <ButtonsContainer>
-                <button>{showtimes[0].name}</button>
-                <button>{showtimes[1].name}</button>
+
+              {showtimes.map((i, index) =>{
+                return (
+                  
+                <Link to={`/assentos/${showtimes[index].id}`} key={index} >
+                  <button>
+                    {i.name}
+                  </button>
+                </Link>
+              )
+              })}
+
             </ButtonsContainer>
         </SessionContainers>
     )
 
 }
-
 
 const SessionContainers = styled.div`
   display: flex;

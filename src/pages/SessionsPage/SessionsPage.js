@@ -5,23 +5,21 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export default function SessionsPage({ imagens }) {
+  const { movieId } = useParams();
+  const sessionsURL = `https://mock-api.driven.com.br/api/v8/cineflex/movies/${movieId}/showtimes`;
 
   const [moviePoster, setMoviePoster] = useState("https://imgs.search.brave.com/kK-qPkBwDxw2Eo0GXNTFDUD5XdXsemJ7umiqGVK1yks/rs:fit:820:981:1/g:ce/aHR0cHM6Ly9pbWcu/ZmF2cG5nLmNvbS8x/OC85LzE4L3Bob3Rv/Z3JhcGhpYy1maWxt/LW1vdmllLWljb25z/LWNpbmVtYS1jbGFw/cGVyYm9hcmQtcG5n/LWZhdnBuZy1hUjBC/YWhFekVqQ0tlZ0JB/NUxuMllXMUZlLmpw/Zw");
   const [title, setTitle] = useState('CARREGANDO')
-  const { movieId } = useParams();
-  const sessionsURL = `https://mock-api.driven.com.br/api/v8/cineflex/movies/${movieId}/showtimes`;
-  const [sessionsDays, setSessionsDays] = useState('CARREGANDO')
   const [days, setDays] = useState([])
 
   useEffect(() => {
-
     const promise = axios.get(sessionsURL);
     promise.then(({data}) => {
 
-    const {title: movieTitle, posterURL: poster, days: days,} = data
+    const {movieTitle, posterURL, days} = data
 
     setDays(days)
-    setMoviePoster(poster)
+    setMoviePoster(posterURL)
     setTitle(movieTitle)
     });
   }, []);
@@ -38,7 +36,7 @@ export default function SessionsPage({ imagens }) {
       </div>
       <FooterContainer>
         <div>
-          <img src={moviePoster} alt="loading" />
+          <img src={moviePoster} alt="movie" />
         </div>
         <div>
           <p>{title}</p>

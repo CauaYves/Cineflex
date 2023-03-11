@@ -1,6 +1,7 @@
 import styled from "styled-components"
 
-export default function SeatsPage() {
+export default function SeatsPage({imagens}) {
+    console.log(imagens)
     
     return (
         <PageContainer>

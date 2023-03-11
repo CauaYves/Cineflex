@@ -11,12 +11,16 @@ import SuccessPage from "./pages/SuccessPage/SuccessPage"
 export default function App() {
 
     const [imagens, setImagens] = useState([])
+    
     useEffect(() => {
         const url = "https://mock-api.driven.com.br/api/v8/cineflex/movies"
 
         const promise = axios.get(url)
         promise.then((answer) => {
             setImagens(answer.data)
+        })
+        promise.catch((answer) =>{
+            alert('ERROR',answer.response.data)
         })
     }, [])
 
@@ -28,7 +32,7 @@ export default function App() {
 
                     <Route path="/" element={<HomePage imagens={imagens}/>} />
                     <Route path="/sessoes/:movieId" element={<SessionsPage imagens={imagens}/>} />
-                    <Route path="/" element={<SeatsPage />} />
+                    <Route path="/assentos/:idSessao" element={<SeatsPage imagens={imagens}/>} />
                     <Route path="/" element={<SuccessPage />} />
 
                 </Routes>
