@@ -1,22 +1,34 @@
+import Chairs from "../../components/Chairs"
+import axios from "axios"
+import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import styled from "styled-components"
 
 export default function SeatsPage(props) {
-    
+    const [chairs, setChairs] = useState([])
+
     const urlEncoded = useParams()
     const movieDay = JSON.parse(urlEncoded.idSessao)
 
-    const {moviePoster, title} = props
+    const { id, weekday, hours } = movieDay
+    const { moviePoster, title } = props
+
+    const chairUrl = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${id}/seats`
+
+    useEffect(() => {
+        const promise = axios.get(chairUrl)
+
+        promise.then((answer) => {
+            setChairs(answer.data.seats)
+        })
+    }, [])
+
     return (
         <PageContainer>
             Selecione o(s) assento(s)
 
             <SeatsContainer>
-                <SeatItem>01</SeatItem>
-                <SeatItem>02</SeatItem>
-                <SeatItem>03</SeatItem>
-                <SeatItem>04</SeatItem>
-                <SeatItem>05</SeatItem>
+                <Chairs chairs={chairs} />
             </SeatsContainer>
 
             <CaptionContainer>
@@ -50,7 +62,7 @@ export default function SeatsPage(props) {
                 </div>
                 <div>
                     <p>{title}</p>
-                    <p>{movieDay.weekday} - {movieDay.hours}</p>
+                    <p>{weekday} - {hours}</p>
                 </div>
             </FooterContainer>
 
@@ -116,19 +128,6 @@ const CaptionItem = styled.div`
     flex-direction: column;
     align-items: center;
     font-size: 12px;
-`
-const SeatItem = styled.div`
-    border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
-    height: 25px;
-    width: 25px;
-    border-radius: 25px;
-    font-family: 'Roboto';
-    font-size: 11px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 5px 3px;
 `
 const FooterContainer = styled.div`
     width: 100%;

@@ -22,8 +22,8 @@ export default function App() {
         promise.then((answer) => {
             setmovies(answer.data)
         })
-        promise.catch((answer) =>{
-            alert('ERROR',answer.response.data)
+        promise.catch((answer) => {
+            alert('ERROR', answer.response.data)
         })
     }, [])
 
@@ -31,33 +31,40 @@ export default function App() {
         <BrowserRouter>
 
             <NavContainer>CINEFLEX</NavContainer>
-                <Routes>
 
-                    <Route path="/" element={<HomePage movies={movies}/>} />
-                    <Route path="/sessoes/:movieId" element={
-                        <SessionsPage
+            <Routes>
 
-                            movies={movies}
-                            moviePoster={moviePoster}
-                            title={title}
-                            days={days}
-                            
-                            setMoviePoster={setMoviePoster}
-                            setTitle={setTitle}
-                            setDays={setDays}
+                <Route path="/" element={
+                    <HomePage
+                        movies={movies}
+                    />}
+                />
+                <Route path="/sessoes/:movieId" element={
+                    <SessionsPage
 
-                        />} />
-                    <Route path="/assentos/:idSessao" element={
-                        <SeatsPage 
-                            moviePoster={moviePoster}
-                            title={title}
-                            days={days}
+                        movies={movies}
+                        moviePoster={moviePoster}
+                        title={title}
+                        days={days}
 
-                        />
-                        } />
-                    <Route path="/" element={<SuccessPage />} />
+                        setMoviePoster={setMoviePoster}
+                        setTitle={setTitle}
+                        setDays={setDays}
 
-                </Routes>
+                    />} />
+                <Route path="/assentos/:idSessao" element={
+                    <SeatsPage
+                        moviePoster={moviePoster}
+                        title={title}
+                        days={days}
+
+                    />
+                } />
+                <Route path="/" element={
+                    <SuccessPage />
+                }/>
+
+            </Routes>
         </BrowserRouter>
     )
 }

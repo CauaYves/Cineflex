@@ -15,6 +15,7 @@ export default function SessionContainer({ properties }) {
           const obj = {
             weekday: weekday,
             hours: i.name,
+            id: i.id
           }
 
           const serializedObj = encodeURIComponent(JSON.stringify(obj))
