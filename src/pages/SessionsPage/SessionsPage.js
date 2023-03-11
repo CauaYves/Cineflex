@@ -1,38 +1,35 @@
-import styled from "styled-components";
-import axios from "axios";
-import SessionContainer from "../../components/SessionContainer";
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import styled from "styled-components"
+import axios from "axios"
+import SessionContainer from "../../components/SessionContainer"
+import { useParams } from "react-router-dom"
+import { useEffect } from "react"
 
-export default function SessionsPage({ imagens }) {
-  const { movieId } = useParams();
-  const sessionsURL = `https://mock-api.driven.com.br/api/v8/cineflex/movies/${movieId}/showtimes`;
+export default function SessionsPage(props) {
 
-  const [moviePoster, setMoviePoster] = useState("https://imgs.search.brave.com/kK-qPkBwDxw2Eo0GXNTFDUD5XdXsemJ7umiqGVK1yks/rs:fit:820:981:1/g:ce/aHR0cHM6Ly9pbWcu/ZmF2cG5nLmNvbS8x/OC85LzE4L3Bob3Rv/Z3JhcGhpYy1maWxt/LW1vdmllLWljb25z/LWNpbmVtYS1jbGFw/cGVyYm9hcmQtcG5n/LWZhdnBuZy1hUjBC/YWhFekVqQ0tlZ0JB/NUxuMllXMUZlLmpw/Zw");
-  const [title, setTitle] = useState('CARREGANDO')
-  const [days, setDays] = useState([])
+  const { days, setMoviePoster, setTitle, setDays, moviePoster, title } = props
+  const { movieId } = useParams()
+  const sessionsURL = `https://mock-api.driven.com.br/api/v8/cineflex/movies/${movieId}/showtimes`
 
   useEffect(() => {
-    const promise = axios.get(sessionsURL);
-    promise.then(({data}) => {
+    const promise = axios.get(sessionsURL)
+    promise.then(({ data }) => {
 
-    const {movieTitle, posterURL, days} = data
-
-    setDays(days)
-    setMoviePoster(posterURL)
-    setTitle(movieTitle)
-    });
-  }, []);
+      const { title, posterURL, days } = data
+      setDays(days)
+      setMoviePoster(posterURL)
+      setTitle(title)
+    })
+  }, [])
 
   return (
     <PageContainer>
       Selecione o horário
       <div>
-
-        {days.map((day) => {
-          return <SessionContainer key={day.id} properties={day}/>
-        })}
-        
+        {
+          days.map((day) => {
+            return <SessionContainer key={day.id} properties={day} />
+          })
+        }
       </div>
       <FooterContainer>
         <div>

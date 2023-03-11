@@ -1,8 +1,12 @@
+import { useParams } from "react-router-dom"
 import styled from "styled-components"
 
-export default function SeatsPage({imagens}) {
-    console.log(imagens)
+export default function SeatsPage(props) {
     
+    const urlEncoded = useParams()
+    const movieDay = JSON.parse(urlEncoded.idSessao)
+
+    const {moviePoster, title} = props
     return (
         <PageContainer>
             Selecione o(s) assento(s)
@@ -42,11 +46,11 @@ export default function SeatsPage({imagens}) {
 
             <FooterContainer>
                 <div>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster" />
+                    <img src={moviePoster} alt="poster" />
                 </div>
                 <div>
-                    <p>Tudo em todo lugar ao mesmo tempo</p>
-                    <p>Sexta - 14h00</p>
+                    <p>{title}</p>
+                    <p>{movieDay.weekday} - {movieDay.hours}</p>
                 </div>
             </FooterContainer>
 

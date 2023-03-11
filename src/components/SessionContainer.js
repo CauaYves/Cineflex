@@ -1,29 +1,38 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export default function SessionContainer({properties}) {
+export default function SessionContainer({ properties }) {
 
-    const {weekday, date, showtimes } = properties
-    
-    return (
-        <SessionContainers>
-            {weekday} - {date}
-            <ButtonsContainer>
+  const { weekday, date, showtimes } = properties
 
-              {showtimes.map((i, index) =>{
-                return (
-                  
-                <Link to={`/assentos/${showtimes[index].id}`} key={index} >
-                  <button>
-                    {i.name}
-                  </button>
-                </Link>
-              )
-              })}
+  return (
+    <SessionContainers>
+      {weekday} - {date}
+      <ButtonsContainer>
 
-            </ButtonsContainer>
-        </SessionContainers>
-    )
+        {showtimes.map((i, index) => {
+
+          const obj = {
+            weekday: weekday,
+            hours: i.name,
+          }
+
+          const serializedObj = encodeURIComponent(JSON.stringify(obj))
+
+          return (
+
+            <Link to={`/assentos/${serializedObj}`} key={index} >
+              <button>
+                {i.name}
+              </button>
+            </Link>
+          )
+
+        })}
+
+      </ButtonsContainer>
+    </SessionContainers>
+  )
 
 }
 

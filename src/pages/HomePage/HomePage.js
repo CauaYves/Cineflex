@@ -1,14 +1,14 @@
 import MovieContainer from "../../components/MovieContainer"
 import styled from "styled-components"
 
-export default function HomePage({imagens}) {
+export default function HomePage({movies}) {
 
     return (
         <PageContainer>
             Selecione o filme
 
             <ListContainer>
-                {imagens.map((objects) => {
+                {movies.map((objects) => {
                     return <MovieContainer key={objects.id} objects={objects} />
                 })}
             </ListContainer>
