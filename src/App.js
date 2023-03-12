@@ -10,6 +10,8 @@ import SuccessPage from "./pages/SuccessPage/SuccessPage"
 
 export default function App() {
 
+    console.log('210.346.697-70')
+    console.log('cineflix')
     const [movies, setmovies] = useState([])
     const [moviePoster, setMoviePoster] = useState("https://imgs.search.brave.com/kK-qPkBwDxw2Eo0GXNTFDUD5XdXsemJ7umiqGVK1yks/rs:fit:820:981:1/g:ce/aHR0cHM6Ly9pbWcu/ZmF2cG5nLmNvbS8x/OC85LzE4L3Bob3Rv/Z3JhcGhpYy1maWxt/LW1vdmllLWljb25z/LWNpbmVtYS1jbGFw/cGVyYm9hcmQtcG5n/LWZhdnBuZy1hUjBC/YWhFekVqQ0tlZ0JB/NUxuMllXMUZlLmpw/Zw");
     const [title, setTitle] = useState('CARREGANDO')
@@ -57,10 +59,9 @@ export default function App() {
                         moviePoster={moviePoster}
                         title={title}
                         days={days}
-
                     />
                 } />
-                <Route path="/" element={
+                <Route path="/sucesso/:idIngresso" element={
                     <SuccessPage />
                 }/>
 

@@ -1,10 +1,6 @@
-import { Link } from "react-router-dom"
 import styled from "styled-components"
-import { useState } from "react"
 
-export default function Chairs({ chairs }) {
-
-    const [selectedChairs, setSelectedChairs] = useState([]);
+export default function Chairs({ chairs, selectedChairs, setSelectedChairs }) {
 
     function chooseChair(index) {
         const chair = chairs[index];
@@ -18,7 +14,7 @@ export default function Chairs({ chairs }) {
             setSelectedChairs([...selectedChairs, index]);
         }
     }
-    console.log(selectedChairs)
+
     return (
         chairs.map((chair, index) => {
             const isAvailable = chair.isAvailable;

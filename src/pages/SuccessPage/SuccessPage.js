@@ -1,7 +1,10 @@
+import { useParams } from "react-router-dom"
 import styled from "styled-components"
 
 export default function SuccessPage() {
-
+    const urlEncoded = useParams()
+    console.log(urlEncoded.idIngresso)
+    // const movieDay = JSON.parse(urlEncoded.idSessao)
     return (
         <PageContainer>
             <h1>Pedido feito <br /> com sucesso!</h1>

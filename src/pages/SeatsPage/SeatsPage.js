@@ -1,3 +1,4 @@
+import FormContainer from "../../components/FormContainer"
 import Chairs from "../../components/Chairs"
 import axios from "axios"
 import { useEffect, useState } from "react"
@@ -5,15 +6,16 @@ import { useParams } from "react-router-dom"
 import styled from "styled-components"
 
 export default function SeatsPage(props) {
+
+    const [selectedChairs, setSelectedChairs] = useState([]);
     const [chairs, setChairs] = useState([])
     const urlEncoded = useParams()
     const movieDay = JSON.parse(urlEncoded.idSessao)
     const { id, weekday, hours } = movieDay
     const { moviePoster, title } = props
 
-    const chairUrl = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${id}/seats`
-
     useEffect(() => {
+        const chairUrl = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${id}/seats`
         const promise = axios.get(chairUrl)
 
         promise.then((answer) => {
@@ -26,7 +28,11 @@ export default function SeatsPage(props) {
             Selecione o(s) assento(s)
 
             <SeatsContainer>
-                <Chairs chairs={chairs} />
+                <Chairs
+                    chairs={chairs}
+                    selectedChairs={selectedChairs}
+                    setSelectedChairs={setSelectedChairs}
+                />
             </SeatsContainer>
 
             <CaptionContainer>
@@ -44,15 +50,9 @@ export default function SeatsPage(props) {
                 </CaptionItem>
             </CaptionContainer>
 
-            <FormContainer>
-                Nome do Comprador:
-                <input placeholder="Digite seu nome..." />
-
-                CPF do Comprador:
-                <input placeholder="Digite seu CPF..." />
-
-                <button>Reservar Assento(s)</button>
-            </FormContainer>
+            <FormContainer
+                selectedChairs={selectedChairs}
+            />
 
             <FooterContainer>
                 <div>
@@ -89,20 +89,6 @@ const SeatsContainer = styled.div`
     justify-content: center;
     margin-top: 20px;
 `
-const FormContainer = styled.div`
-    width: calc(100vw - 40px); 
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin: 20px 0;
-    font-size: 18px;
-    button {
-        align-self: center;
-    }
-    input {
-        width: calc(100vw - 60px);
-    }
-`
 const CaptionContainer = styled.div`
     display: flex;
     flex-direction: row;
@@ -122,8 +108,8 @@ const CaptionCircleClicked = styled.div`
     margin: 5px 3px;
 `
 const CaptionCircleReserved = styled.div`
-    border: 1px solid #7B8B99;
-    background-color: #C3CFD9;
+    border: 1px solid #F7C52B;
+    background-color: #FBE192;
     height: 25px;
     width: 25px;
     border-radius: 25px;
@@ -133,8 +119,8 @@ const CaptionCircleReserved = styled.div`
     margin: 5px 3px;
 `
 const CaptionCircleAvailable = styled.div`
-    border: 1px solid #F7C52B;
-    background-color: #FBE192;
+    border: 1px solid #7B8B99;
+    background-color: #C3CFD9;
     height: 25px;
     width: 25px;
     border-radius: 25px;
