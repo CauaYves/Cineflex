@@ -1,8 +1,7 @@
-import FormContainer from "../../components/FormContainer"
 import Chairs from "../../components/Chairs"
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 
 export default function SeatsPage(props) {
@@ -13,6 +12,37 @@ export default function SeatsPage(props) {
     const movieDay = JSON.parse(urlEncoded.idSessao)
     const { id, weekday, hours } = movieDay
     const { moviePoster, title } = props
+    const navigate = useNavigate()
+
+    const [name, setName] = useState("")
+    const [cpf, setCpf] = useState("")
+
+    function sendName(input) {
+        setName(input)
+    }
+    function sendCpf(input) {
+        setCpf(input)
+    }
+    function ReserveChairs(event, name, cpf, chairsId) {
+
+        event.preventDefault();
+
+        const obj = {
+            ids: chairsId,
+            name: name,
+            cpf: cpf,
+        }
+
+        const url = "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many";
+        const promise = axios.post(url, obj)
+
+        promise.then(() => {
+            navigate(`/sucesso/${obj}`)
+        })
+        promise.catch((answer) => {
+            alert(answer.response.data)
+        })
+    }
 
     useEffect(() => {
         const chairUrl = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${id}/seats`
@@ -50,9 +80,28 @@ export default function SeatsPage(props) {
                 </CaptionItem>
             </CaptionContainer>
 
-            <FormContainer
-                selectedChairs={selectedChairs}
-            />
+            <FormContainers>
+                <form>
+                    Nome do Comprador:
+                    <input
+                        type="text"
+                        required
+                        placeholder="Digite seu nome..."
+                        value={name}
+                        onChange={(e) => sendName(e.target.value)}
+                    />
+                    CPF do Comprador:
+                    <input
+                        type="text"
+                        pattern="[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}"
+                        required
+                        placeholder="Digite seu CPF..."
+                        onChange={(e) => sendCpf(e.target.value)}
+                        value={cpf}
+                    />
+                    <button type="submit" onClick={(e) => ReserveChairs(e, name, cpf, selectedChairs)}>Reservar Assento(s)</button>
+                </form>
+            </FormContainers>
 
             <FooterContainer>
                 <div>
@@ -67,7 +116,20 @@ export default function SeatsPage(props) {
         </PageContainer>
     )
 }
-
+const FormContainers = styled.div`
+    width: calc(100vw - 40px); 
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 20px 0;
+    font-size: 18px;
+    button {
+        align-self: center;
+    }
+    input {
+        width: calc(100vw - 60px);
+    }
+`
 const PageContainer = styled.div`
     display: flex;
     flex-direction: column;

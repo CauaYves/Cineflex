@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useState } from "react"
+import { Link } from "react-router-dom"
 import styled from "styled-components"
 
 export default function FormContainer({ selectedChairs }) {
@@ -22,17 +23,21 @@ export default function FormContainer({ selectedChairs }) {
             name: name,
             cpf: cpf,
         }
+
         const url = "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many";
         const promise = axios.post(url, obj);
+
         promise.then(() => {
+
         });
         promise.catch((answer) => {
             alert(answer.response.data);
         });
     }
+
     return (
         <FormContainers>
-            <form action={`/sucesso`} onSubmit={ReserveChairs}>
+            <form action={`/sucesso`}>
                 Nome do Comprador:
                 <input
                     type="text"
@@ -50,7 +55,9 @@ export default function FormContainer({ selectedChairs }) {
                     onChange={(e) => sendCpf(e.target.value)}
                     value={cpf}
                 />
+                <Link to='/sucesso'>
                 <button type="submit" onClick={(e) => ReserveChairs(e, name, cpf, selectedChairs)}>Reservar Assento(s)</button>
+                </Link>
             </form>
         </FormContainers>
     )
