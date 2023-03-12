@@ -6,8 +6,8 @@ export default function MovieContainer(props) {
 const movie = props.objects.posterURL
 const movieId = props.objects.id
   return (
-    <Link to={ `/sessoes/${movieId}` } >
-      <MovieContainers>
+    <Link data-test="movie" to={ `/sessoes/${movieId}` } >         {/* data test */}
+      <MovieContainers >
         <img src={movie} alt="poster" />
       </MovieContainers>
     </Link>

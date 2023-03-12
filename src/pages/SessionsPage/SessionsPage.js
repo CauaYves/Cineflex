@@ -32,7 +32,7 @@ export default function SessionsPage(props) {
           })
         }
       </div>
-      <FooterContainer>
+      <FooterContainer data-test="footer">            {/* data test */}
         <div>
           <img src={moviePoster} alt="movie" />
         </div>

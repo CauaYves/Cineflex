@@ -6,23 +6,20 @@ export default function SessionContainer({ properties }) {
   const { weekday, date, showtimes } = properties
 
   return (
-    <SessionContainers>
+    <SessionContainers data-test="movie-day">   {/* data test */}
       {weekday} - {date}
-      <ButtonsContainer>
+      <ButtonsContainer >
 
         {showtimes.map((i, index) => {
-
           const obj = {
             weekday: weekday,
             hours: i.name,
             id: i.id
           }
-
           const serializedObj = encodeURIComponent(JSON.stringify(obj))
-
           return (
 
-            <Link to={`/assentos/${serializedObj}`} key={index} >
+            <Link data-test="showtime" to={`/assentos/${serializedObj}`} key={index} >    {/* data test */}
               <button>
                 {i.name}
               </button>

@@ -23,6 +23,7 @@ export default function Chairs({ chairs, selectedChairs, setSelectedChairs }) {
             const borderColor = isSelected ? "#0E7D71" : (isAvailable ? "#808F9D" : "#F7C52B");
             return (
                 <SeatItem
+                    data-test="seat"            // DATA TEST                     
                     key={index}
                     onClick={() => chooseChair(index)}
                     backgroundColor={backgroundColor}

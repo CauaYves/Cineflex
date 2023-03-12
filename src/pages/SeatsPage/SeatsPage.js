@@ -87,6 +87,7 @@ export default function SeatsPage(props) {
                 <form>
                     Nome do Comprador:
                     <input
+                        data-test="client-name"                        // DATA TEST                        
                         type="text"
                         required
                         placeholder="Digite seu nome..."
@@ -95,6 +96,7 @@ export default function SeatsPage(props) {
                     />
                     CPF do Comprador:
                     <input
+                        data-test="client-cpf"                        // DATA TEST                        
                         type="text"
                         pattern="[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}"
                         required
@@ -102,11 +104,16 @@ export default function SeatsPage(props) {
                         onChange={(e) => sendCpf(e.target.value)}
                         value={cpf}
                     />
-                    <button type="submit" onClick={(e) => ReserveChairs(e, name, cpf, selectedChairs)}>Reservar Assento(s)</button>
+                    <button
+                        data-test="book-seat-btn"                     // DATA TEST                        
+                        type="submit"
+                        onClick={(e) => ReserveChairs(e, name, cpf, selectedChairs)}>
+                        Reservar Assento(s)
+                    </button>
                 </form>
             </FormContainers>
 
-            <FooterContainer>
+            <FooterContainer data-test="footer">                         {/*// DATA TEST */}
                 <div>
                     <img src={moviePoster} alt="poster" />
                 </div>

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import styled from "styled-components"
 
 export default function SuccessPage() {
@@ -11,26 +11,28 @@ export default function SuccessPage() {
         <PageContainer>
             <h1>Pedido feito <br /> com sucesso!</h1>
 
-            <TextContainer>
+            <TextContainer data-test="movie-info">                      {/* data test*/}
                 <strong><p>Filme e sessão</p></strong>
                 <p>{title}</p>
                 <p>{weekday} - {hours}</p>
             </TextContainer>
 
-            <TextContainer>
+            <TextContainer data-test="seats-info">                      {/* data test*/}    
                 <strong><p>Ingressos</p></strong>
                 {ids.map((i) => {
                     return <p key={i}> assento {i}</p>
                 })}
             </TextContainer>
 
-            <TextContainer>
+            <TextContainer data-test="client-info">
                 <strong><p>Comprador</p></strong>
                 <p>Nome: {name}</p>
                 <p>Cpf: {cpf}</p>
             </TextContainer>
 
-            <button>Voltar para Home</button>
+            <Link data-test="go-home-btn" to="/">
+            <button >Voltar para Home</button>
+            </Link>
         </PageContainer>
     )
 }
