@@ -6,10 +6,8 @@ import styled from "styled-components"
 
 export default function SeatsPage(props) {
     const [chairs, setChairs] = useState([])
-
     const urlEncoded = useParams()
     const movieDay = JSON.parse(urlEncoded.idSessao)
-
     const { id, weekday, hours } = movieDay
     const { moviePoster, title } = props
 
@@ -33,15 +31,15 @@ export default function SeatsPage(props) {
 
             <CaptionContainer>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircleClicked />
                     Selecionado
                 </CaptionItem>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircleAvailable />
                     Disponível
                 </CaptionItem>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircleReserved />
                     Indisponível
                 </CaptionItem>
             </CaptionContainer>
@@ -112,9 +110,31 @@ const CaptionContainer = styled.div`
     justify-content: space-between;
     margin: 20px;
 `
-const CaptionCircle = styled.div`
-    border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
+const CaptionCircleClicked = styled.div`
+    border: 1px solid #0E7D71;
+    background-color: #1AAE9E;
+    height: 25px;
+    width: 25px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 3px;
+`
+const CaptionCircleReserved = styled.div`
+    border: 1px solid #7B8B99;
+    background-color: #C3CFD9;
+    height: 25px;
+    width: 25px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 3px;
+`
+const CaptionCircleAvailable = styled.div`
+    border: 1px solid #F7C52B;
+    background-color: #FBE192;
     height: 25px;
     width: 25px;
     border-radius: 25px;

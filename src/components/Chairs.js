@@ -1,36 +1,47 @@
+import { Link } from "react-router-dom"
 import styled from "styled-components"
+import { useState } from "react"
 
-export default function Chairs({chairs}){
+export default function Chairs({ chairs }) {
 
-    console.log(chairs)
+    const [selectedChairs, setSelectedChairs] = useState([]);
 
-    return(
+    function chooseChair(index) {
+        const chair = chairs[index];
+        if (!chair.isAvailable) {
+            alert("Esse assento não está disponível.");
+            return;
+        }
+        if (selectedChairs.includes(index)) {
+            setSelectedChairs(selectedChairs.filter(chairIndex => chairIndex !== index));
+        } else {
+            setSelectedChairs([...selectedChairs, index]);
+        }
+    }
+    console.log(selectedChairs)
+    return (
         chairs.map((chair, index) => {
-            return(
-                <SeatItem 
+            const isAvailable = chair.isAvailable;
+            const isSelected = selectedChairs.includes(index);
+            const backgroundColor = isSelected ? "#1AAE9E" : (isAvailable ? "#C3CFD9" : "#FBE192");
+            const borderColor = isSelected ? "#0E7D71" : (isAvailable ? "#808F9D" : "#F7C52B");
+            return (
+                <SeatItem
                     key={index}
-                    isAvailable={chair.isAvailable}
-                >
+                    onClick={() => chooseChair(index)}
+                    backgroundColor={backgroundColor}
+                    borderColor={borderColor}>
                     {[index]}
-                </ SeatItem>
+                </SeatItem>
             )
         })
     )
-    
+
 }
 
 const SeatItem = styled.div`
-
-    /* 
-    
-    green: #0E7D71 - #1AAE9E
-    yellow: #F7C52B - #FBE192
-    gray: #7B8B99 - #C3CFD9
-    */
-    background-color: ${(props) => props.isAvailable ? "#1AAE9E" : "#FBE192"};    
-    border-color: ${(props) => props.isAvailable ? "#1AAE9E" : "#FBE192"};             // Essa cor deve mudar
-
-    border: 1px solid;          
+    background-color: ${(props) => props.backgroundColor};
+    border: 1px solid ${(props) => props.borderColor};
     height: 25px;
     width: 25px;
     border-radius: 25px;
