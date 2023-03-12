@@ -18,6 +18,7 @@ export default function SessionsPage(props) {
       setDays(days)
       setMoviePoster(posterURL)
       setTitle(title)
+
     })
   }, [])
 

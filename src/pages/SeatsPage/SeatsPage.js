@@ -13,7 +13,6 @@ export default function SeatsPage(props) {
     const { id, weekday, hours } = movieDay
     const { moviePoster, title } = props
     const navigate = useNavigate()
-
     const [name, setName] = useState("")
     const [cpf, setCpf] = useState("")
 
@@ -31,13 +30,17 @@ export default function SeatsPage(props) {
             ids: chairsId,
             name: name,
             cpf: cpf,
+            weekday: weekday,
+            hours: hours,
+            title: title,
         }
 
+        const encodedUrl = encodeURIComponent(JSON.stringify(obj))
         const url = "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many";
         const promise = axios.post(url, obj)
 
         promise.then(() => {
-            navigate(`/sucesso/${obj}`)
+            navigate(`/sucesso/${encodedUrl}`)
         })
         promise.catch((answer) => {
             alert(answer.response.data)

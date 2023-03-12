@@ -4,14 +4,12 @@ import axios from "axios"
 import styled from "styled-components"
 import HomePage from "./pages/HomePage/HomePage"
 import SeatsPage from "./pages/SeatsPage/SeatsPage"
-import SessionsPage from "./pages/SessionsPage/SessionsPage"
 import SuccessPage from "./pages/SuccessPage/SuccessPage"
+import SessionsPage from "./pages/SessionsPage/SessionsPage"
 
 
 export default function App() {
-
-    console.log('210.346.697-70')
-    console.log('cineflix')
+    
     const [movies, setmovies] = useState([])
     const [moviePoster, setMoviePoster] = useState("https://imgs.search.brave.com/kK-qPkBwDxw2Eo0GXNTFDUD5XdXsemJ7umiqGVK1yks/rs:fit:820:981:1/g:ce/aHR0cHM6Ly9pbWcu/ZmF2cG5nLmNvbS8x/OC85LzE4L3Bob3Rv/Z3JhcGhpYy1maWxt/LW1vdmllLWljb25z/LWNpbmVtYS1jbGFw/cGVyYm9hcmQtcG5n/LWZhdnBuZy1hUjBC/YWhFekVqQ0tlZ0JB/NUxuMllXMUZlLmpw/Zw");
     const [title, setTitle] = useState('CARREGANDO')
