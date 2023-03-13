@@ -1,33 +1,27 @@
 import { Link, useParams } from "react-router-dom"
 import styled from "styled-components"
 
-export default function SuccessPage() {
-    const urlEncoded = useParams()
-    const movieDay = JSON.parse(urlEncoded.idIngresso)
-
-    const { cpf, ids, name, hours, title, weekday} = movieDay
-
+export default function SuccessPage(props) {
+console.log(props)
     return (
         <PageContainer>
             <h1>Pedido feito <br /> com sucesso!</h1>
 
             <TextContainer data-test="movie-info">                      {/* data test*/}
                 <strong><p>Filme e sessão</p></strong>
-                <p>{title}</p>
-                <p>{weekday} - {hours}</p>
+                <p>{props.title}</p>
+                <p>{props.day} - {}</p>
             </TextContainer>
 
             <TextContainer data-test="seats-info">                      {/* data test*/}    
                 <strong><p>Ingressos</p></strong>
-                {ids.map((i) => {
-                    return <p key={i}> assento {i}</p>
-                })}
+                
             </TextContainer>
 
             <TextContainer data-test="client-info">
                 <strong><p>Comprador</p></strong>
-                <p>Nome: {name}</p>
-                <p>Cpf: {cpf}</p>
+                <p>Nome: {props.name}</p>
+                <p>Cpf: {props.cpf}</p>
             </TextContainer>
 
             <Link data-test="go-home-btn" to="/">

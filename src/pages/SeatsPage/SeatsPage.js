@@ -1,26 +1,30 @@
 import Chairs from "../../components/Chairs"
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { useParams, useNavigate } from "react-router-dom"
+import { useNavigate, useParams} from "react-router-dom"
 import styled from "styled-components"
 
 export default function SeatsPage(props) {
 
     const [selectedChairs, setSelectedChairs] = useState([]);
     const [chairs, setChairs] = useState([])
-    const urlEncoded = useParams()
-    const movieDay = JSON.parse(urlEncoded.idSessao)
-    const { id, weekday, hours } = movieDay
+    const id = useParams()
     const { moviePoster, title } = props
-    const navigate = useNavigate()
-    const [name, setName] = useState("")
-    const [cpf, setCpf] = useState("")
+    const navigate = useNavigate();
+    useEffect(() => {
+        const chairUrl = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${id.idSessao}/seats`
+        const promise = axios.get(chairUrl)
+
+        promise.then((answer) => {
+            setChairs(answer.data.seats)
+        })
+    }, [])
 
     function sendName(input) {
-        setName(input)
+        props.setName(input)
     }
     function sendCpf(input) {
-        setCpf(input)
+        props.setCpf(input)
     }
     function ReserveChairs(event, name, cpf, chairsId) {
 
@@ -30,31 +34,18 @@ export default function SeatsPage(props) {
             ids: chairsId,
             name: name,
             cpf: cpf,
-            weekday: weekday,
-            hours: hours,
-            title: title,
         }
-
-        const encodedUrl = encodeURIComponent(JSON.stringify(obj))
         const url = "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many";
         const promise = axios.post(url, obj)
 
-        promise.then(() => {
-            navigate(`/sucesso/${encodedUrl}`)
+        promise.then((answer) => {
+            console.log(answer.data)
+            navigate(`/sucesso`)
         })
         promise.catch((answer) => {
             alert(answer.response.data)
         })
     }
-
-    useEffect(() => {
-        const chairUrl = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${id}/seats`
-        const promise = axios.get(chairUrl)
-
-        promise.then((answer) => {
-            setChairs(answer.data.seats)
-        })
-    }, [])
 
     return (
         <PageContainer>
@@ -91,7 +82,7 @@ export default function SeatsPage(props) {
                         type="text"
                         required
                         placeholder="Digite seu nome..."
-                        value={name}
+                        value={props.name}
                         onChange={(e) => sendName(e.target.value)}
                     />
                     CPF do Comprador:
@@ -102,12 +93,12 @@ export default function SeatsPage(props) {
                         required
                         placeholder="Digite seu CPF..."
                         onChange={(e) => sendCpf(e.target.value)}
-                        value={cpf}
+                        value={props.cpf}
                     />
                     <button
                         data-test="book-seat-btn"                     // DATA TEST                        
                         type="submit"
-                        onClick={(e) => ReserveChairs(e, name, cpf, selectedChairs)}>
+                        onClick={(e) => ReserveChairs(e, props.name, props.cpf, selectedChairs)}>
                         Reservar Assento(s)
                     </button>
                 </form>
@@ -119,7 +110,7 @@ export default function SeatsPage(props) {
                 </div>
                 <div>
                     <p>{title}</p>
-                    <p>{weekday} - {hours}</p>
+                    <p> - </p>
                 </div>
             </FooterContainer>
 

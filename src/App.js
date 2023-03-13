@@ -9,11 +9,19 @@ import SessionsPage from "./pages/SessionsPage/SessionsPage"
 
 
 export default function App() {
-    
+
     const [movies, setmovies] = useState([])
     const [moviePoster, setMoviePoster] = useState("https://imgs.search.brave.com/kK-qPkBwDxw2Eo0GXNTFDUD5XdXsemJ7umiqGVK1yks/rs:fit:820:981:1/g:ce/aHR0cHM6Ly9pbWcu/ZmF2cG5nLmNvbS8x/OC85LzE4L3Bob3Rv/Z3JhcGhpYy1maWxt/LW1vdmllLWljb25z/LWNpbmVtYS1jbGFw/cGVyYm9hcmQtcG5n/LWZhdnBuZy1hUjBC/YWhFekVqQ0tlZ0JB/NUxuMllXMUZlLmpw/Zw");
     const [title, setTitle] = useState('CARREGANDO')
     const [days, setDays] = useState([])
+    const [cpf, setCpf] = useState("")
+    const [name, setName] = useState("")
+
+    const [day, setDay] = useState()
+    const [week, setWeek] = useState()
+    const [hour, setHour] = useState()
+    
+
 
     useEffect(() => {
         const url = "https://mock-api.driven.com.br/api/v8/cineflex/movies"
@@ -41,6 +49,9 @@ export default function App() {
                 />
                 <Route path="/sessoes/:movieId" element={
                     <SessionsPage
+                        setDay={setDay}
+                        setHour={setHour}
+                        setWeek={setWeek}
 
                         movies={movies}
                         moviePoster={moviePoster}
@@ -54,14 +65,25 @@ export default function App() {
                     />} />
                 <Route path="/assentos/:idSessao" element={
                     <SeatsPage
+                        name={name}
+                        setName={setName}
+                        cpf={cpf}
+                        setCpf={setCpf}
                         moviePoster={moviePoster}
                         title={title}
                         days={days}
                     />
                 } />
-                <Route path="/sucesso/:idIngresso" element={
-                    <SuccessPage />
-                }/>
+                <Route path="/sucesso/" element={
+                    <SuccessPage
+                        name={name}
+                        title={title}
+                        cpf={cpf}
+                        week={week}
+                        hour={hour}
+                        day={day}
+                    />
+                } />
 
             </Routes>
         </BrowserRouter>
